@@ -8,7 +8,6 @@ import NotFound from './components/NotFound';
 import Register from './components/Register';
 import Forgot from './components/Forgot';
 import AddImage from './components/AddImage';
-import ProtectedRoute from './reusable/ProtectedRoute';
 
 function App() {
   return (
@@ -20,8 +19,7 @@ function App() {
         <Route path='/personal-gallery/:id' element={<PersonalGallery />} />
         <Route path='/' element={<Gallery />} />
         <Route path='*' element={<NotFound />} />
-        {/* rutas protegidas */}
-        <Route path="/add-image" element={<ProtectedRoute children={<AddImage />} />} />
+        <Route path='/add-image' element={<AddImage />} />
       </Routes>
   );
 }

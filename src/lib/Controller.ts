@@ -10,12 +10,18 @@ export const firestore = getFirestore(app);
 export const galleryCollection = collection(firestore, "gallery")
 
 //FILES
-export const uploadFiles = async (file: any) => {
+export const uploadFiles = async (data: IGallery) => {
     const fileName = uuidv4();
     const storageRef = ref(storage, fileName);
-    await uploadBytes(storageRef, file);
+    await uploadBytes(storageRef, data?.image);
     const imagesave = await getImages(fileName);
-    console.log(imagesave);
+    const newData: IGallery = {
+        user: data?.user,
+        name: data?.name,
+        description: data?.description,
+        image: imagesave
+    };
+    await addDocumentGallery(newData);
 }
 
 export const getImages = async (fileName: string) => {
@@ -26,16 +32,9 @@ export const getImages = async (fileName: string) => {
 //FIRESTORE
 export const addDocumentGallery = async (document: IGallery) => {
     const galleryCollectionRef = collection(db, 'gallery');
-    const gallery: IGallery = {
-        description: document?.description,
-        image: document?.image,
-        name: document?.name,
-        user: document?.user
-    }
     try {
-        await addDoc(galleryCollectionRef, gallery);
+        await addDoc(galleryCollectionRef, document);
         console.log('Imagen agregada exitosamente');
-
     } catch (error) {
         console.error('Error al agregar la imagen:', error);
     }

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { galleryCollection } from "../lib/Controller";
 import { IGallery } from "../types/Gallery";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+// import { useAuth } from "../context/authContext";
 
 const Gallery = () => {
-    const { user } = useAuth();
+    // const { user } = useAuth();
     const [galleries, setGalleries] = useState<IGallery[]>([])
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Gallery = () => {
             })
     }, [])
     // console.log('gallerys', galleries);
-    console.log('authContext', user);
+    // console.log('authContext', user);
     return (
         <>
             <h1 className="bg-blue-500 text-white p-4" >Gallery</h1>
