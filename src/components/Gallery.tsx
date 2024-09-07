@@ -2,12 +2,11 @@ import { DocumentData, onSnapshot, QuerySnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { galleryCollection } from "../lib/Controller";
 import { IGallery } from "../types/Gallery";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
 const Gallery = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
+    const { user } = useAuth();
     const [galleries, setGalleries] = useState<IGallery[]>([])
 
     useEffect(() => {
@@ -24,17 +23,9 @@ const Gallery = () => {
             })
     }, [])
     // console.log('gallerys', galleries);
-    // console.log('authContext', user);
-
-    const handleLogout = async () => {
-        await logout()
-        navigate('/login')
-    }
-
+    console.log('authContext', user);
     return (
         <>
-            {user && (<button onClick={handleLogout}>logout</button>)}
-
             <h1 className="bg-blue-500 text-white p-4" >Gallery</h1>
             {galleries && galleries.length ? (
                 <div>
