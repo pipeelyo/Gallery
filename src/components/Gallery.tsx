@@ -6,51 +6,49 @@ import { Link } from "react-router-dom";
 // import { useAuth } from "../context/authContext";
 
 const Gallery = () => {
-    // const { user } = useAuth();
-    const [galleries, setGalleries] = useState<IGallery[]>([])
+  // const { user } = useAuth();
+  const [galleries, setGalleries] = useState<IGallery[]>([])
 
-    useEffect(() => {
-        onSnapshot(galleryCollection,
-            (snapshot: QuerySnapshot<DocumentData>) => {
-                setGalleries(
-                    snapshot.docs.map((doc) => {
-                        return {
-                            id: doc.id,
-                            ...doc.data()
-                        }
-                    })
-                );
-            })
-    }, [])
-    // console.log('gallerys', galleries);
-    // console.log('authContext', user);
-    return (
-        <>
-            <h1 className="bg-blue-500 text-white p-4" >Gallery</h1>
-            {galleries && galleries.length ? (
-                <div>
-                    {
-                        galleries?.map((gallery) => (
-                            <div key={gallery?.id}>
-                                <img
-                                    src={gallery?.image}
-                                    width={500}
-                                    height={500}
-                                    alt="Descripción de la imagen" />
-                                <p>{gallery?.name}</p>
-                                <p>{gallery?.description}</p>
-                                <Link to={"/person-gallery/" + gallery?.user}>Galeria personal</Link>
-                            </div>
-                        ))
-                    }
+  useEffect(() => {
+    onSnapshot(galleryCollection,
+      (snapshot: QuerySnapshot<DocumentData>) => {
+        setGalleries(
+          snapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              ...doc.data()
+            }
+          })
+        );
+      })
+  }, [])
+  // console.log('gallerys', galleries);
+  // console.log('authContext', user);
+  return (
+    <>
+      <div className="container mx-auto">
+        {/* <h1 className="" >Gallery</h1> */}
+        {galleries && galleries.length ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+            {
+              galleries?.map((gallery) => (
+                <div key={gallery?.id}>
+                  <Link to={"/person-gallery/" + gallery?.user}>
+                    <img className="h-auto max-w-full rounded-lg" src={gallery?.image} alt="" />
+                  </Link>
                 </div>
-            ) : (
-                <div>
-                    Data no encontrada
-                </div>
-            )}
-        </>
-    )
+              ))
+            }
+          </div>
+        ) : (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong className="font-bold">¡Oops!</strong>
+            <span className="block sm:inline">Data no encontrada.</span>
+          </div>
+        )}
+      </div>
+    </>
+  )
 }
 
 export default Gallery;
