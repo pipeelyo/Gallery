@@ -51,7 +51,7 @@ export const getDocumentGallery = async (docId: string) => {
     }
 }
 
-export const deleteDocumentGallery = async (docId: string) => {
+export const deleteDocumentGallery = async (docId:any) => {
     try {
         const docRef = doc(db, 'gallery', docId);
         await deleteDoc(docRef);

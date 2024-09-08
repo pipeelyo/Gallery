@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { getByUser } from "../lib/Controller";
+import { deleteDocumentGallery, getByUser } from "../lib/Controller";
 import { useEffect, useState } from "react";
 import { IGallery } from "../types/Gallery";
 
@@ -23,6 +23,11 @@ const PersonalGallery = () => {
         fetchGalleryData();
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const handleDelete = async (id:string|undefined|null) => {
+       await deleteDocumentGallery(id)
+    }
+    
     if (isLoading) {
         return (
             <section className="flex justify-center items-center mt-6">
@@ -55,7 +60,7 @@ const PersonalGallery = () => {
                                                     <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                         Editar
                                                     </button>
-                                                    <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                    <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() =>  handleDelete(gallery?.id)}>
                                                         Eliminar
                                                     </button>
                                                 </div>

@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { galleryCollection } from "../lib/Controller";
 import { IGallery } from "../types/Gallery";
 import { Link } from "react-router-dom";
-// import { useAuth } from "../context/authContext";
+import Jumbotron from "../reusable/Jumbotron";
+import RandomImage from "../reusable/RandomImage";
 
 const Gallery = () => {
-  // const { user } = useAuth();
+
   const [galleries, setGalleries] = useState<IGallery[]>([])
+  const [randomImage, setRandomImage] = useState<IGallery>();
 
   useEffect(() => {
     onSnapshot(galleryCollection,
@@ -22,12 +24,20 @@ const Gallery = () => {
         );
       })
   }, [])
-  // console.log('gallerys', galleries);
-  // console.log('authContext', user);
+
+  useEffect(() => {
+    const copy: any = galleries
+    if (copy.length > 0) {
+      const randomIndex = Math.floor(Math.random() * copy.length);
+      setRandomImage(copy[randomIndex]);
+    }
+  }, [galleries])
+
   return (
     <>
       <div className="container mx-auto">
-        {/* <h1 className="" >Gallery</h1> */}
+        <Jumbotron />
+        <RandomImage image={randomImage} />
         {galleries && galleries.length ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
             {

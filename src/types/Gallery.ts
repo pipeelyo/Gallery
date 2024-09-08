@@ -1,5 +1,5 @@
 export interface IGallery {
-    id?: string,
+    id?: string | undefined | null,
     user?:string | undefined | null,
     image?: any,
     name?: string,
