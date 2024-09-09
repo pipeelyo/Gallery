@@ -2,12 +2,14 @@ import { useState } from "react";
 import { uploadFiles } from "../lib/Controller";
 import { IGallery } from "../types/Gallery";
 import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 const AddImage = () => {
 	const { user } = useAuth();
 	const [image, setImage] = useState<any>()
 	const [name, setName] = useState<any>()
 	const [description, setDescription] = useState<any>()
+	const navigate = useNavigate()
 
 	const handleIMage = (e: any) => {
 		setImage(e.target.files[0])
@@ -21,6 +23,7 @@ const AddImage = () => {
 				description: description
 			}
 			await uploadFiles(data)
+			navigate('/')
 		} catch (error: any) {
 			console.log(error.message);
 		}

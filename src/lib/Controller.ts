@@ -80,6 +80,12 @@ export const updateDocumentGallery = async (docId: string, document: IGallery) =
 export const getByUser = async (user: any) => {
     const q = query(collection(db, "gallery"), where("user", "==", user));
     const querySnapshot = await getDocs(q);
-    const datos = querySnapshot.docs.map(doc => doc.data());
+    const datos = querySnapshot.docs.map(doc => {
+        const dataResult: IGallery = {
+            id: doc?.id,
+            ...doc.data()
+        } 
+        return dataResult
+    });
     return datos;
 }
