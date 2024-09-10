@@ -61,16 +61,14 @@ export const deleteDocumentGallery = async (docId:any) => {
     }
 }
 
-export const updateDocumentGallery = async (docId: string|undefined, document: IGallery) => {
+export const updateDocumentGallery = async (itemId: any, document: IGallery) => {
     try {
-        const idDoc:string = docId ? docId : '';
-        const docRef = doc(db, 'gallery', idDoc);
-        const gallery: any = {
-            description: document?.description,
-            image: document?.image,
-            name: document?.name,
-            user: document?.user
-        }
+        const docRef = doc(db, "gallery", itemId);
+        const gallery: any = {};
+        if (document?.description !== undefined) gallery.description = document.description;
+        if (document?.image !== undefined) gallery.image = document.image;
+        if (document?.name !== undefined) gallery.name = document.name;
+        if (document?.user !== undefined) gallery.user = document.user;
         await updateDoc(docRef, gallery);
     } catch (error) {
         console.error('Error al actualizar el documento:', error);
