@@ -61,9 +61,10 @@ export const deleteDocumentGallery = async (docId:any) => {
     }
 }
 
-export const updateDocumentGallery = async (docId: string, document: IGallery) => {
+export const updateDocumentGallery = async (docId: string|undefined, document: IGallery) => {
     try {
-        const docRef = doc(db, 'gallery', docId);
+        const idDoc:string = docId ? docId : '';
+        const docRef = doc(db, 'gallery', idDoc);
         const gallery: any = {
             description: document?.description,
             image: document?.image,
@@ -71,7 +72,6 @@ export const updateDocumentGallery = async (docId: string, document: IGallery) =
             user: document?.user
         }
         await updateDoc(docRef, gallery);
-        console.log('Documento actualizado correctamente');
     } catch (error) {
         console.error('Error al actualizar el documento:', error);
     }
@@ -89,3 +89,14 @@ export const getByUser = async (user: any) => {
     });
     return datos;
 }
+
+export const getGalleryItemById = async (itemId: string) => {
+    try {
+      const docRef = doc(db, "gallery", itemId);
+      const docSnap = await getDoc(docRef);
+      const currentData = docSnap.exists() ? docSnap.data() as IGallery : null; 
+      return currentData;
+    } catch (error) {
+      console.error("Error updating gallery item:", error);
+    }
+  };
